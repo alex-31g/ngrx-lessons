@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
 import { Routes, RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import * as fromAuth from './reducers';
+import { ReactiveFormsModule } from "@angular/forms";
 
 const routes: Routes = [
-	{ path: '', pathMatch: 'full', redirectTo: 'register' },
-  { path: 'register', component: RegisterComponent },
+	{ path: '', pathMatch: 'full', redirectTo: 'login' },
+  { path: 'login', component: LoginComponent },
 ];
 
 @NgModule({
 	imports: [
 		CommonModule,
+		ReactiveFormsModule,
 		RouterModule.forChild(routes),
 
 		/// ngrx has been added to auth-module like feature-module
@@ -24,6 +26,6 @@ const routes: Routes = [
 			fromAuth.reducers
 		)
 	],
-	declarations: [RegisterComponent],
+	declarations: [LoginComponent],
 })
 export class AuthModule {}
