@@ -1,27 +1,26 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { Users } from "./model/users.model";
+import { IUsers } from "./model/users.model";
+import { IUsers_back } from "./model/users.model";
 import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
 	constructor(private http: HttpClient) {}
 
-	getData(email: string, password: string): Observable<Users[]> {
-		// В данном примере параметры email и password не используются
+	getData(email: string, id: string): Observable<IUsers> {
+		return this.http.get<IUsers_back>(`https://jsonplaceholder.typicode.com/users/${id}`)
 
-		return this.http.get<Users[]>('https://jsonplaceholder.typicode.com/users')
-
-			// Избавляемся от ненужных полей и приводим полученные объекты в соответствие с интерфейсом Users
 			.pipe(
 				map(data => {
 					console.log('data ==>', data);
 					
-					return data.map((user: any) => {
-						return {id: user.id, name: user.username};
-					});
+					// Если почта, которую ввел юзер, не соответствует почте, что пришла в ответе сервера - метод возвратит undefined
+					if (email === data.email) {
+						// Избавляемся от ненужных полей и приводим полученный объект в соответствие с интерфейсом IUsers
+						return { index: data.id, name: data.username, mail: data.email }
+					}
 			}))
-
 	}
 }

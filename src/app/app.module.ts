@@ -12,11 +12,19 @@ import { environment } from '../environments/environment';
 
 import { HttpClientModule } from '@angular/common/http';
 
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [
+  { path: 'courses', loadChildren: () => import('./courses/courses.module').then(m => m.CoursesModule) },
+  { path: '**', redirectTo: '/' }
+];
+
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+		RouterModule.forRoot(routes),
     BrowserModule,
 		AppRoutingModule,
 		HttpClientModule,

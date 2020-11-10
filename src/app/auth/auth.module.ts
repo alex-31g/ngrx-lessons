@@ -7,16 +7,15 @@ import * as fromAuth from './reducers';
 import { ReactiveFormsModule } from "@angular/forms";
 import { AuthService } from "./auth.service";
 
-const routes: Routes = [
-	{ path: '', pathMatch: 'full', redirectTo: 'login' },
-  { path: 'login', component: LoginComponent },
+const authRoutes: Routes = [
+  { path: '', component: LoginComponent },
 ];
 
 @NgModule({
 	imports: [
 		CommonModule,
 		ReactiveFormsModule,
-		RouterModule.forChild(routes),
+		RouterModule.forChild(authRoutes),
 
 		/// ngrx has been added to auth-module like feature-module
 		StoreModule.forFeature(
