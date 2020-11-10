@@ -43,7 +43,7 @@ export class LoginComponent {
 				(users) => {
 					this.user = users;
 					
-					this.router.navigateByUrl('/courses');
+					this.router.navigateByUrl('/posts');
 				},
 				// Обработчик ошибки сработает в 2х случаях:
 				// - если юзер ввел некоректный id
