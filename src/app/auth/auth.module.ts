@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './components/login/login.component';
 import { Routes, RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import * as fromAuth from './reducers';
 import { ReactiveFormsModule } from "@angular/forms";
+import { AuthService } from "./auth.service";
 
 const routes: Routes = [
 	{ path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -28,4 +29,13 @@ const routes: Routes = [
 	],
 	declarations: [LoginComponent],
 })
-export class AuthModule {}
+export class AuthModule {
+	static forRoot(): ModuleWithProviders<AuthModule> {
+		return {
+			ngModule: AuthModule,
+			providers: [
+				AuthService
+			]
+		}
+	}
+}
