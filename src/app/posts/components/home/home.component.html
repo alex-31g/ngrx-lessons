@@ -1,1 +1,8 @@
-Posts
+<h1>Posts</h1>
+
+<div *ngFor='let x of allPosts$  | async'>
+	<hr>
+
+	User {{ x.userId }} : {{ x.title }}
+	
+</div>
