@@ -10,5 +10,4 @@ export class PostsService {
 	findAllPosts(): Observable<IPost[]> {
 		return this.http.get<IPost[]>('https://jsonplaceholder.typicode.com/posts/')
 	}
-
 }

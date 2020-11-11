@@ -1,22 +1,23 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
+import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 
 import { AuthModule } from "./auth/auth.module";
+
 import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 
-import { HttpClientModule } from '@angular/common/http';
-
-import { RouterModule, Routes } from '@angular/router';
-
 const routes: Routes = [
-  { path: 'posts', loadChildren: () => import('./posts/posts.module').then(m => m.PostsModule) },
-  { path: '**', redirectTo: '/' }
+	{ path: 'posts', loadChildren: () => import('./posts/posts.module').then(m => m.PostsModule) },
+	
+	// Если задан неизвестный путь - перенаправить к '/'
+	{ path: '**', redirectTo: '/' }
 ];
 
 @NgModule({
@@ -24,15 +25,15 @@ const routes: Routes = [
     AppComponent
   ],
   imports: [
-		RouterModule.forRoot(routes),
-    BrowserModule,
-		AppRoutingModule,
+		BrowserModule,
 		HttpClientModule,
+		AppRoutingModule,
 		AuthModule.forRoot(),
+		RouterModule.forRoot(routes),
 		StoreModule.forRoot(reducers, {
       metaReducers
-    }),
-		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
+		}),
+		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
   providers: [],
   bootstrap: [AppComponent]

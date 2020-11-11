@@ -9,8 +9,8 @@ import { IPost } from "../../model/post.model";
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.sass"],
 })
-export class HomeComponent {
 
+export class HomeComponent {
 	allPosts$: Observable<IPost[]>;
 
 	constructor(
@@ -28,5 +28,4 @@ export class HomeComponent {
 			})
 		)
 	}
-
 }

@@ -1,11 +1,12 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { LoginComponent } from './components/login/login.component';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from '@angular/router';
+import { LoginComponent } from './components/login/login.component';
+import { ReactiveFormsModule } from "@angular/forms";
+import { ModuleWithProviders } from '@angular/core';
+import { AuthService } from "./auth.service";
 import { StoreModule } from '@ngrx/store';
 import * as fromAuth from './reducers';
-import { ReactiveFormsModule } from "@angular/forms";
-import { AuthService } from "./auth.service";
 
 const authRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -14,20 +15,19 @@ const authRoutes: Routes = [
 @NgModule({
 	imports: [
 		CommonModule,
-		ReactiveFormsModule,
 		RouterModule.forChild(authRoutes),
+		ReactiveFormsModule,
 
-		/// ngrx has been added to auth-module like feature-module
+		// ngrx has been added to auth-module like feature-module
 		StoreModule.forFeature(
 			// path for the state which we can see in dev tools
 			fromAuth.authFeatureKey, 
-
 			// config reducers for our module
-			fromAuth.reducers
-		)
+			fromAuth.reducers)
 	],
 	declarations: [LoginComponent],
 })
+
 export class AuthModule {
 	static forRoot(): ModuleWithProviders<AuthModule> {
 		return {

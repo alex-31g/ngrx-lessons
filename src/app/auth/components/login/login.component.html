@@ -2,9 +2,11 @@
 	<input type="email" placeholder="Email"
 		formControlName="email"
 	>
+	<br>
 	<input type="id" placeholder="Id"
 		formControlName="id"
 	>
+	<br>
 	<button (click)="login()"
 		[disabled]="!form.valid"
 	>Login</button>
