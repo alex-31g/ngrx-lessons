@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AuthService } from "../../auth.service";
-import { IUsers } from "../../model/users.model";
 import { tap } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { noop } from "rxjs";
@@ -14,7 +13,6 @@ import { noop } from "rxjs";
 
 export class LoginComponent {
 	form: FormGroup;
-	user: IUsers;
 
 	constructor(
 		private fb: FormBuilder,
