@@ -4,6 +4,7 @@ import { AuthService } from "../../auth.service";
 import { IUsers } from "../../model/users.model";
 import { tap } from "rxjs/operators";
 import { Router } from "@angular/router";
+import { noop } from "rxjs";
 
 @Component({
   selector: "nl-login",
@@ -35,13 +36,12 @@ export class LoginComponent {
 				// tap() используется для выполнения какого-либо действия; не изменяет исходного значения
 				tap(user => {
 					if (!user) throw new Error;
+					console.log('user data', user);
+					this.router.navigateByUrl('/posts');
 				})
 			)
 			.subscribe(
-				(users) => {
-					this.user = users;
-					this.router.navigateByUrl('/posts');
-				},
+				noop,
 				// Обработчик ошибки сработает в 2х случаях:
 				// - если юзер ввел некоректный id
 				// - если почта, которую ввел юзер, не соответствует почте, что пришла в ответе сервера
