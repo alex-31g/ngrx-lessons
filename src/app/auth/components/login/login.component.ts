@@ -4,6 +4,9 @@ import { AuthService } from "../../auth.service";
 import { tap } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { noop } from "rxjs";
+import { Store } from "@ngrx/store";
+import { AppState } from '../../../reducers/index';
+import { loginAction } from '../../auth.actions';
 
 @Component({
   selector: "nl-login",
@@ -17,7 +20,11 @@ export class LoginComponent {
 	constructor(
 		private fb: FormBuilder,
 		private auth: AuthService,
-		private router: Router,		
+		private router: Router,	
+
+		// Инжектим store и указываем ему тип AppState - это тип для state (состояния) нашего store
+		// AppState-интерфейс находится в src\app\reducers\index.ts
+		private store: Store<AppState>,	
 	) {
 		this.form = fb.group({
 			email: ['Lucio_Hettinger@annie.ca', [Validators.required, Validators.email]],
@@ -35,6 +42,21 @@ export class LoginComponent {
 				tap(user => {
 					if (!user) throw new Error;
 					console.log('user data', user);
+
+					// Создаем action
+					const newLoginAction = loginAction({user: user});
+					console.log('newLoginAction ==>', newLoginAction);
+					// Отправляем action
+					this.store.dispatch(newLoginAction);
+
+					// ===> Отправка action без использования loginAction():
+					// this.store.dispatch({
+					// 	type: '[Login Page] User Login',
+					// 	payload: {
+					// 		user: user 
+					// 	}
+					// })
+
 					this.router.navigateByUrl('/posts');
 				})
 			)
