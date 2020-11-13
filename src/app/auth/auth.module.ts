@@ -7,6 +7,7 @@ import { ModuleWithProviders } from '@angular/core';
 import { AuthService } from "./auth.service";
 import { StoreModule } from '@ngrx/store';
 import * as fromAuth from './reducers';
+import { authReducer } from './reducers';
 
 const authRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -23,7 +24,7 @@ const authRoutes: Routes = [
 			// path for the state which we can see in dev tools
 			fromAuth.authFeatureKey, 
 			// config reducers for our module
-			fromAuth.reducers)
+			authReducer)
 	],
 	declarations: [LoginComponent],
 })
