@@ -6,7 +6,7 @@ import { Router } from "@angular/router";
 import { noop } from "rxjs";
 import { Store } from "@ngrx/store";
 import { AppState } from '../../../reducers/index';
-import { loginAction } from '../../auth.actions';
+import { AuthActions } from '../../action-types';
 
 @Component({
   selector: "nl-login",
@@ -44,7 +44,7 @@ export class LoginComponent {
 					console.log('user data', user);
 
 					// Создаем action
-					const newLoginAction = loginAction({user: user});
+					const newLoginAction = AuthActions.loginAction({user: user});
 					console.log('newLoginAction ==>', newLoginAction);
 					// Отправляем action
 					this.store.dispatch(newLoginAction);
