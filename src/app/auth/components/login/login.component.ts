@@ -39,12 +39,12 @@ export class LoginComponent {
 		this.auth.getData(val.email, val.id)
 			.pipe(
 				// tap() используется для выполнения какого-либо действия; не изменяет исходного значения
-				tap(user => {
-					if (!user) throw new Error;
-					console.log('user data', user);
+				tap(userData => {
+					if (!userData) throw new Error;
+					console.log('user data', userData);
 
 					// Создаем action
-					const newLoginAction = AuthActions.loginAction({user: user});
+					const newLoginAction = AuthActions.loginAction({user: userData});
 					console.log('newLoginAction ==>', newLoginAction);
 					// Отправляем action
 					this.store.dispatch(newLoginAction);
@@ -53,7 +53,7 @@ export class LoginComponent {
 					// this.store.dispatch({
 					// 	type: '[Login Page] User Login',
 					// 	payload: {
-					// 		user: user 
+					// 		user: userData 
 					// 	}
 					// })
 
