@@ -1,5 +1,13 @@
 <nav>
-	<a routerLink="/" routerLinkActive="active">LOG-IN</a> <br />
+	<a class="menu-item" 
+		routerLink="/" routerLinkActive="active"
+		*ngIf='isLoggedOut$ | async'
+	>LOG-IN</a> <br />
+
+	<a class="menu-item"  
+		(click)="logout()"
+		*ngIf='isLoggedIn$ | async'
+	>LOG-OUT</a> <br />
 </nav>
 
 <div id="view">
