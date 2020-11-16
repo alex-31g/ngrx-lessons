@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { AppState } from './reducers/index'
 import { map } from 'rxjs/operators';
+import { isLoggedIn, isLoggedOut } from './auth/auth.selectors'
 
 @Component({
   selector: 'app-root',
@@ -28,14 +29,16 @@ export class AppComponent implements OnInit {
 			.pipe(
 				// Переводим значение в boolean:
 				// если в user есть данные - получим true, если нет - false
-				map(state => !!state["auth"].user)
+				// map(state => !!state["auth"].user) // <-- del
+				select(isLoggedIn) // <-- add
 			);
 		
 		this.isLoggedOut$ = this.store
 			.pipe(
 				// Переводим значение в boolean:
 				// если в user есть данные - получим false, если нет - true
-				map(state => !state["auth"].user)
+				// map(state => !state["auth"].user) // <-- del
+				select(isLoggedOut) // <-- add
 			);
 	}
 }
