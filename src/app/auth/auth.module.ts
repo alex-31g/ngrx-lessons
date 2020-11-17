@@ -8,6 +8,7 @@ import { AuthService } from "./auth.service";
 import { StoreModule } from '@ngrx/store';
 import * as fromAuth from './reducers';
 import { authReducer } from './reducers';
+import { AuthGuard } from './auth.guard';
 
 const authRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -34,7 +35,8 @@ export class AuthModule {
 		return {
 			ngModule: AuthModule,
 			providers: [
-				AuthService
+				AuthService,
+				AuthGuard,
 			]
 		}
 	}

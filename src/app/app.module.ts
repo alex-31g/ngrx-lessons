@@ -12,9 +12,15 @@ import { StoreModule } from '@ngrx/store';
 import { reducers, metaReducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
-	{ path: 'posts', loadChildren: () => import('./posts/posts.module').then(m => m.PostsModule) },
+	{ 
+		path: 'posts', 
+		loadChildren: () => import('./posts/posts.module').then(m => m.PostsModule), 
+		// canActivate свойство указывает, что этот роут защищен AuthGuard сервисом
+		canActivate: [AuthGuard] 
+	},
 	
 	// Если задан неизвестный путь - перенаправить к '/'
 	{ path: '**', redirectTo: '/' }
