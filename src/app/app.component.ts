@@ -4,6 +4,7 @@ import { select, Store } from '@ngrx/store';
 import { AppState } from './reducers/index'
 import { map } from 'rxjs/operators';
 import { isLoggedIn, isLoggedOut } from './auth/auth.selectors'
+import { AuthActions } from './auth/action-types';
 
 @Component({
   selector: 'app-root',
@@ -40,5 +41,9 @@ export class AppComponent implements OnInit {
 				// map(state => !state["auth"].user) // <-- del
 				select(isLoggedOut) // <-- add
 			);
+	}
+
+	logout() {
+		this.store.dispatch(AuthActions.logoutAction());
 	}
 }

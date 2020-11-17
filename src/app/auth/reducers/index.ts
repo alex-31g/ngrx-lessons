@@ -22,6 +22,7 @@ export const initialAuthState: AuthState = {
 
 export const authReducer = createReducer(
 	initialAuthState,
+
 	on(  
 		AuthActions.loginAction,
 		(state, action) => {
@@ -31,5 +32,15 @@ export const authReducer = createReducer(
 				user: action.user
 			}
 		}
-	)
+	),
+
+	on(
+		AuthActions.logoutAction, 
+		(state, action) => {
+			return {
+				user: undefined
+			}
+		}
+	),
+	
 );
