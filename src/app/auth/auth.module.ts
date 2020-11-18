@@ -10,6 +10,7 @@ import * as fromAuth from './reducers';
 import { authReducer } from './reducers';
 import { AuthGuard } from './auth.guard';
 import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './auth.effects';
 
 const authRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -29,7 +30,7 @@ const authRoutes: Routes = [
 			authReducer),
 
 			// Этот массив будет содержать список эффектов, связанных с этим модулем
-			EffectsModule.forFeature([]),
+			EffectsModule.forFeature([AuthEffects]),
 	],
 	declarations: [LoginComponent],
 })
