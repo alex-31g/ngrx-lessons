@@ -9,6 +9,7 @@ import { StoreModule } from '@ngrx/store';
 import * as fromAuth from './reducers';
 import { authReducer } from './reducers';
 import { AuthGuard } from './auth.guard';
+import { EffectsModule } from '@ngrx/effects';
 
 const authRoutes: Routes = [
   { path: '', component: LoginComponent },
@@ -25,7 +26,10 @@ const authRoutes: Routes = [
 			// path for the state which we can see in dev tools
 			fromAuth.authFeatureKey, 
 			// config reducers for our module
-			authReducer)
+			authReducer),
+
+			// Этот массив будет содержать список эффектов, связанных с этим модулем
+			EffectsModule.forFeature([]),
 	],
 	declarations: [LoginComponent],
 })
