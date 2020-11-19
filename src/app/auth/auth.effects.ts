@@ -8,26 +8,26 @@ import { tap } from 'rxjs/operators';
 @Injectable()
 export class AuthEffects {
 
-		// BEST способ ================================
+	// BEST способ ================================
 
-		// Создавая эффекты с помощью createEffect() мы получаем: 
-		// - автоматический перезапуск в случаи возникновении ошибок;
-		// - автоматический subscribe(), поэтому не нужно выполнять subscribe() в ручную, как в способе 1 и 2 
+	// Создавая эффекты с помощью createEffect() мы получаем: 
+	// - автоматический перезапуск в случаи возникновении ошибок;
+	// - автоматический subscribe(), поэтому не нужно выполнять subscribe() в ручную, как в способе 1 и 2 
 
-		login$ = createEffect( 
-			() => this.action$.pipe(
+	login$ = createEffect( 
+		() => this.action$.pipe(
 
-				// ofType - используется для фильтрации действий по их типу
-				ofType(AuthActions.loginAction),
+			// ofType - используется для фильтрации действий по их типу
+			ofType(AuthActions.loginAction),
 
-				tap(action => {
-					localStorage.setItem('user', JSON.stringify(action.user));
-				})
-			),
+			tap(action => {
+				localStorage.setItem('user', JSON.stringify(action.user));
+			})
+		),
 
-			// Указываем, что данный эффект не возвращает action
-			{ dispatch: false }
-		);
+		// Указываем, что данный эффект не возвращает action
+		{ dispatch: false }
+	);
 	// =============================================
 
 	// Инжектим сервис Actions, который является частью библиотеки ngrx/effects
