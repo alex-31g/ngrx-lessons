@@ -23,6 +23,16 @@ export class AppComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
+
+		// Урок 23 ===
+		const userProfile = localStorage.getItem('user');
+		if (userProfile) {
+			this.store.dispatch(AuthActions.loginAction(
+				{ user: JSON.parse(userProfile) }
+			));
+		}
+		// ===========
+
 		// Просмотреть данные store
 		this.store.subscribe(state => console.log('store value:', state));
 

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthActions } from './action-types';
@@ -14,6 +15,7 @@ export class AuthEffects {
 	// - автоматический перезапуск в случаи возникновении ошибок;
 	// - автоматический subscribe(), поэтому не нужно выполнять subscribe() в ручную, как в способе 1 и 2 
 
+	// createEffect() - принимает функцию, которая возвращает observable
 	login$ = createEffect( 
 		() => this.action$.pipe(
 
@@ -28,10 +30,23 @@ export class AuthEffects {
 		// Указываем, что данный эффект не возвращает action
 		{ dispatch: false }
 	);
-	// =============================================
+
+	logout$ = createEffect( 
+		() => this.action$.pipe(
+			ofType(AuthActions.logoutAction),
+			tap(action => {
+				localStorage.removeItem('user');
+				this.router.navigateByUrl('/login');
+			})
+		),
+		{ dispatch: false }
+	);
 
 	// Инжектим сервис Actions, который является частью библиотеки ngrx/effects
-	constructor(private action$: Actions){
+	constructor(
+		private action$: Actions, 
+		private router: Router, 
+	){
 
 		// Для реализации эффекта необходимо получить уведомление о том, что возникло действие.
 		// Поскольку сервис Actions, который мы заинжектили, это observable - то подписываемся на него.
