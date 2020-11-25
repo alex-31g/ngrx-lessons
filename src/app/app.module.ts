@@ -39,7 +39,15 @@ const routes: Routes = [
 		AuthModule.forRoot(),
 		RouterModule.forRoot(routes),
 		StoreModule.forRoot(reducers, {
-      metaReducers
+			metaReducers,
+			runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+        strictStateSerializability: true,
+        strictActionSerializability: true,
+        strictActionWithinNgZone: true,
+        strictActionTypeUniqueness: true,
+			}
 		}),
 		StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
 		EffectsModule.forRoot([]),
