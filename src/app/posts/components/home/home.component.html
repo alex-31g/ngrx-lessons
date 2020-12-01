@@ -1,4 +1,4 @@
-<div *ngFor='let x of allPosts$  | async'>
-	<hr>
-	User {{ x.userId }} : {{ x.title }}
-</div>
+<!-- Передаем значение переменной allPosts$ из *home.component* в *posts-card-list.component* -->
+<nl-posts-card-list
+	[allPosts]="allPosts$ | async"
+>

@@ -1,0 +1,10 @@
+<div *ngFor='let post of allPosts'>
+	<hr>
+
+	TITLE: {{ post.title }}
+
+	<button
+		[routerLink]="['/posts', post.id]"
+	>VIEW</button>
+
+</div>

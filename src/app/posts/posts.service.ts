@@ -8,6 +8,10 @@ export class PostsService {
 	constructor(private http: HttpClient) {}
 
 	findAllPosts(): Observable<IPost[]> {
-		return this.http.get<IPost[]>('https://jsonplaceholder.typicode.com/posts/')
+		return this.http.get<IPost[]>('https://jsonplaceholder.typicode.com/posts/');
+	}
+
+	findPostById(postId: string): Observable<IPost> {
+		return this.http.get<IPost>(`https://jsonplaceholder.typicode.com/posts/${postId}`);
 	}
 }
