@@ -29,8 +29,8 @@ export function logger(reducer: ActionReducer<any>): ActionReducer<any> {
 
 	// Metareducer должен возвращать функцию, которая принимает два параметра: состояние и действие
 	return (state, action) => {
-		console.log('state before:', state);
-		console.log('action:', action);
+		// console.log('state before:', state);
+		// console.log('action:', action);
 
 		// Metareducers не должны изменять передаваемые им состояние и действие!!!
 

@@ -1,3 +1,5 @@
+import { postsReducer } from './reducers/posts.reducers';
+import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -28,7 +30,8 @@ const postsRoutes: Routes = [
 	imports: [
 		CommonModule,
 		RouterModule.forChild(postsRoutes),
-		EffectsModule.forFeature([PostsEffects])
+		EffectsModule.forFeature([PostsEffects]),
+		StoreModule.forFeature('posts', postsReducer),
 	],
 	declarations: [
 		HomeComponent, 

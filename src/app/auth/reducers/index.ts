@@ -26,8 +26,8 @@ export const authReducer = createReducer(
 	on(  
 		AuthActions.loginAction,
 		(state, action) => {
-			console.log('state ==>', state);
-			console.log('action ==>', action);
+			// console.log('state ==>', state);
+			// console.log('action ==>', action);
 			return {
 				user: action.user
 			}
