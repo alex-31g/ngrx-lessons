@@ -31,4 +31,15 @@ export const postsReducer = createReducer(
 		// возвращает в store новую версию состояния в Entity State формате:
 		(state, action) => adapter.addMany(action.posts, state) 
 	)
-)
+);
+
+export const {
+	selectAll
+} = adapter.getSelectors();
+/*
+Метод getSelectors() - возвращает селекторы:
+selectIds - возвращает массив идентификаторов сущностей;
+selectEntities - возвращает объект, в котором ключи это идентификаторы записей, а значения - сами записи;
+selectAll - возвращает массив всех сущностей;
+selectTotal - возвращает общее количество записей в массиве.
+*/

@@ -8,8 +8,8 @@ import { IPost } from "../../model/post.model";
 
 export class PostsCardListComponent {
 
-	// Получаем значение переменной allPosts из home.component
-	@Input()
-	allPosts: IPost[]
+	// Получаем значение переменных allPosts и postsNumb из home.component
+	@Input() allPosts: IPost[]
+	@Input() postsNumb: number;
 
 }
