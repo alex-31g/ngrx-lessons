@@ -63,4 +63,11 @@ export const selectPostsNumber = createSelector(
 	// Второй аргумент - projector-функция - отдает результат работы селектора.
 	// Аргументом принимает тот кусок состояния, который мы получили с помощью mapping-функции
 	posts => posts.filter((item, i, arr) => i % 2 === 0).length
-);    
+);   
+
+// С помощью createSelector создаем селектор arePostsLoaded -
+// - который будет возвращать из store значение allPostsLoadedFlag
+export const arePostsLoaded = createSelector(
+	selectPostsState,
+	state => state.allPostsLoadedFlag
+)

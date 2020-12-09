@@ -10,7 +10,10 @@ import { PostsActions } from '../action-types';
 // }
 
 // Интерфейс PostsState, закоментированный выше, можно написать проще, используя класс EntityState:
-export interface PostsState extends EntityState<IPost> {}
+export interface PostsState extends EntityState<IPost> {
+	// Флаг, который говорит - загружены посты (true) или нет (false):
+	allPostsLoadedFlag: boolean
+}
 
 // Создаем адаптер с помощью метода createEntityAdapter:
 export const adapter = createEntityAdapter<IPost>();
@@ -18,7 +21,10 @@ export const adapter = createEntityAdapter<IPost>();
 // Создаем начальное состояние posts-модуля с помощью метода getInitialState.
 // В результате вызова adapter.getInitialState(),
 // переменная initialPostsState будет хранить пустой массив ids и пустой объект entities
-export const initialPostsState = adapter.getInitialState();
+export const initialPostsState = adapter.getInitialState(
+	// Присваиваем начальное значение флагу allPostsLoaded: 
+	{ allPostsLoadedFlag: false }
+);
 
 // Создаем редюсер с помощью метода createReducer.
 // Данный рудюсер слушает allPostsLoaded action и он должен
@@ -29,7 +35,13 @@ export const postsReducer = createReducer(
 		PostsActions.allPostsLoaded,
 		// Следующий метод 1м аргументом принимает предыдущий state, вторым - action,
 		// возвращает в store новую версию состояния в Entity State формате:
-		(state, action) => adapter.addMany(action.posts, state) 
+		(state, action) => adapter.addMany(
+			action.posts, 
+			{
+				... state,
+				allPostsLoadedFlag: true
+			}
+		) 
 	)
 );
 
