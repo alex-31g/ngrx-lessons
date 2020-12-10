@@ -23,12 +23,14 @@ export class PostsResolver implements Resolve<any> {
 	// - state: RouterStateSnapshot - содержит текущий стейт роутера
 	resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
 		return this.store.pipe(
-			// С помощью оператора select обращаем к селектору arePostsLoaded, который возвратит 
-			// значение флага allPostsLoadedFlag (true/false) в зависимости от того - были ли уже загружены курсы или нет.
+			// С помощью оператора select обращаемся к селектору arePostsLoaded, который возвратит 
+			// значение флага allPostsLoadedFlag (true/false) в зависимости от того - были ли уже загружены посты или нет.
 			// Значение true/false будет получено в параметре postsLoaded следующего оператора tap
 			select(arePostsLoaded),
 
 			tap(postsLoaded => {
+				// Если посты не загружены - запускаем loadAllPosts action, 
+				// который информирует о том, что нужно начать загрузку постов с сервера
 				if (!this.loading && !postsLoaded) {
 					this.loading = true;
 					// Вызов действия loadAllPosts()
@@ -36,10 +38,15 @@ export class PostsResolver implements Resolve<any> {
 				}
 			}),
 
+			// filter - возвращает значения, соответствующие указанному условию
 			filter(postsLoaded => postsLoaded),
 			
-			// Чтобы завершить роутинг, Observable метода resolve() должен быть завершен
+			// Чтобы завершить роутинг, Observable метода resolve() должен быть завершен -
+			// вызываем метод first(), который возвратит первое полученное из потока значение,
+			// и завершит Observable
 			first(),
+
+			// finalize - вызов функции, когда Observable завершается или возникает ошибка
 			finalize(() => this.loading = false)
 		)
 	}
