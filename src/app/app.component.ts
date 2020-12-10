@@ -5,6 +5,7 @@ import { AppState } from './reducers/index'
 import { map } from 'rxjs/operators';
 import { isLoggedIn, isLoggedOut } from './auth/auth.selectors'
 import { AuthActions } from './auth/action-types';
+import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -13,13 +14,16 @@ import { AuthActions } from './auth/action-types';
 })
 export class AppComponent implements OnInit {
 
+	loading = true;
+
 	// Переменные, в зависимости от которых будут отображаться кнопки LOG-IN и LOG-OUT
 	isLoggedIn$: Observable<boolean>;
 	isLoggedOut$: Observable<boolean>;
 
 	constructor(
 		// Чтобы получить доступ к данным из хранилища - инжектим Store
-		private store: Store<AppState>
+		private store: Store<AppState>,
+		private router: Router,
 	) {}
 
 	ngOnInit() {
@@ -51,6 +55,25 @@ export class AppComponent implements OnInit {
 				// map(state => !state["auth"].user) // <-- del
 				select(isLoggedOut) // <-- add
 			);
+
+		this.router.events.subscribe(event  => {
+			switch (true) {
+				case event instanceof NavigationStart: {
+					this.loading = true;
+					break;
+				}
+				case event instanceof NavigationEnd:
+				case event instanceof NavigationCancel:
+				case event instanceof NavigationError: {
+					this.loading = false;
+					break;
+				}
+				default: {
+					break;
+				}
+			}
+		});
+		
 	}
 
 	logout() {

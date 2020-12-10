@@ -10,6 +10,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PostsService } from "./posts.service";
 import { PostsResolver } from './posts.resolver';
 import { PostsEffects } from './posts.effects';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const postsRoutes: Routes = [
 	{ 
@@ -32,6 +33,7 @@ const postsRoutes: Routes = [
 		RouterModule.forChild(postsRoutes),
 		EffectsModule.forFeature([PostsEffects]),
 		StoreModule.forFeature('posts', postsReducer),
+		MatProgressSpinnerModule,
 	],
 	declarations: [
 		HomeComponent, 

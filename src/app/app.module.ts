@@ -15,6 +15,8 @@ import { environment } from '../environments/environment';
 import { AuthGuard } from './auth/auth.guard';
 import { EffectsModule } from '@ngrx/effects';
 import { RouterState, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const routes: Routes = [
 	{ 
@@ -55,6 +57,8 @@ const routes: Routes = [
 			stateKey: 'router',
 			routerState: RouterState.Minimal
 		}),
+		BrowserAnimationsModule,
+		MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
