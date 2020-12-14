@@ -12,4 +12,8 @@ export class PostsCardListComponent {
 	@Input() allPosts: IPost[]
 	@Input() postsNumb: number;
 
+	editPost(post: IPost) {
+		console.log(post)
+	}
+
 }

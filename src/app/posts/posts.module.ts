@@ -11,6 +11,8 @@ import { PostsService } from "./posts.service";
 import { PostsResolver } from './posts.resolver';
 import { PostsEffects } from './posts.effects';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 const postsRoutes: Routes = [
 	{ 
@@ -34,6 +36,8 @@ const postsRoutes: Routes = [
 		EffectsModule.forFeature([PostsEffects]),
 		StoreModule.forFeature('posts', postsReducer),
 		MatProgressSpinnerModule,
+		MatButtonModule,
+		MatIconModule,
 	],
 	declarations: [
 		HomeComponent, 
