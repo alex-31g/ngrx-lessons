@@ -27,6 +27,8 @@ export class HomeComponent {
 	}
 
 	reload() {		
+		console.warn('RELOAD FUNCTION IN HOME COMPONENT');
+
 		// this.allPosts$ = this.postsService.findAllPosts().pipe(
 		// 	tap(post => {
 		// 		console.log('all posts ==>', post);

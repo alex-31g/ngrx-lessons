@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>{{dialogTitle}}</h2>
+
+<mat-dialog-content>
+  <ng-container *ngIf="form">
+
+    <ng-container [formGroup]="form">
+      <mat-form-field>
+        <input 
+          matInput
+          placeholder="Post Id"
+          formControlName="id"
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <input 
+          matInput
+          placeholder="Post Title"
+          formControlName="title"
+        >
+      </mat-form-field>
+    </ng-container>
+
+  </ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-raised-button (click)="onClose()">Close</button>
+  <button 
+    mat-raised-button 
+    color="primary"
+    [disabled]="!form?.valid"
+    (click)="onSave()"
+  >
+    Save
+  </button>
+</mat-dialog-actions>
+
+
+
+

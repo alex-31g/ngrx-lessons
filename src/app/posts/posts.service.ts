@@ -14,4 +14,10 @@ export class PostsService {
 	findPostById(postId: string): Observable<IPost> {
 		return this.http.get<IPost>(`https://jsonplaceholder.typicode.com/posts/${postId}`);
 	}
+
+	savePost(courseId: number | string, changes: Partial<IPost>) {
+		console.log('savePost', courseId)
+		console.log('savePost', changes)
+		return this.http.get<IPost[]>('https://jsonplaceholder.typicode.com/posts/');
+	}
 }
