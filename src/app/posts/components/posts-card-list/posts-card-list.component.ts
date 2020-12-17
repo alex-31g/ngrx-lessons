@@ -28,7 +28,8 @@ export class PostsCardListComponent {
 		// (https://material.angular.io/components/dialog/overview)
 		dialogConfig.data = {
 			dialogTitle: "Edit Course",
-			post
+			post,
+			mode: 'update'
 		};
 
 		console.log('dialogConfig', dialogConfig);

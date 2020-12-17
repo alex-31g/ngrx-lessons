@@ -18,6 +18,7 @@ export class EditPostDialogComponent {
   form: FormGroup;
   dialogTitle: string;
   post: IPost;
+  mode: 'create' | 'update';
 
   constructor(
     private fb: FormBuilder,
@@ -35,6 +36,7 @@ export class EditPostDialogComponent {
   ) {
     this.dialogTitle = data.dialogTitle;
     this.post = data.post;
+    this.mode = data.mode;
 
     console.log('MAT_DIALOG_DATA', data)
 
@@ -43,12 +45,14 @@ export class EditPostDialogComponent {
       title: ['', Validators.required],
     };
 
-    this.form = this.fb.group(formControls);
+    if (this.mode == 'update') {
+      this.form = this.fb.group(formControls);
 
-    // Передаем методу patchValue объект, полученный из posts-card-list компонента.
-    // Несмотря на то, что объект содержит 4 поля - body, id, title, userId -
-    // метод patchValue берет из него только поля, описанные в formControls - id, title
-    this.form.patchValue({...data.post});
+      // Передаем методу patchValue объект, полученный из posts-card-list компонента.
+      // Несмотря на то, что объект содержит 4 поля - body, id, title, userId -
+      // метод patchValue берет из него только поля, описанные в formControls - id, title
+      this.form.patchValue({...data.post});
+    }
   }
 
   onClose() {
