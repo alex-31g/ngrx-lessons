@@ -27,6 +27,24 @@ export class PostsEffects {
 		)
 	)
 
+	// createEffect() - принимает функцию, которая возвращает observable
+	savePosts$ = createEffect(
+		() => this.action$.pipe(
+
+			// ofType - используется для фильтрации действий по их типу -
+			// при возникновении postUpdated действия -
+			// будет выполнен запрос к серверу для обновления данных
+			ofType(PostsActions.postUpdated),
+			mergeMap(action => this.postHttpService.savePost(
+				action.update.id,
+				action.update.changes
+			))
+		),
+		// Поскольку данный эффект не будет возвращать нового action - 
+		// мы должны указать значение false
+		{dispatch: false}
+	)
+
 	// Инжектим сервис Actions, который является частью библиотеки ngrx/effects
 	constructor(
 		private action$: Actions, 

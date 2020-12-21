@@ -15,8 +15,8 @@ export class PostsService {
 		return this.http.get<IPost>(`https://jsonplaceholder.typicode.com/posts/${postId}`);
 	}
 
-	savePost(courseId: number | string, changes: Partial<IPost>) {
-		console.log('savePost', courseId)
+	savePost(postId: number | string, changes: Partial<IPost>) {
+		console.log('savePost', postId)
 		console.log('savePost', changes)
 		return this.http.get<IPost[]>('https://jsonplaceholder.typicode.com/posts/');
 	}
