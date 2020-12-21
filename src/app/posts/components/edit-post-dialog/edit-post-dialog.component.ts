@@ -41,8 +41,8 @@ export class EditPostDialogComponent {
     console.log('MAT_DIALOG_DATA', data)
 
     const formControls = {
-      id: ['', Validators.required],
       title: ['', Validators.required],
+      body: ['', Validators.required],
     };
 
     if (this.mode == 'update') {
@@ -50,7 +50,7 @@ export class EditPostDialogComponent {
 
       // Передаем методу patchValue объект, полученный из posts-card-list компонента.
       // Несмотря на то, что объект содержит 4 поля - body, id, title, userId -
-      // метод patchValue берет из него только поля, описанные в formControls - id, title
+      // метод patchValue берет из него только поля, описанные в formControls - title, body
       this.form.patchValue({...data.post});
     }
   }
