@@ -26,11 +26,13 @@ export const initialPostsState = adapter.getInitialState(
 	{ allPostsLoadedFlag: false }
 );
 
-// Создаем редюсер с помощью метода createReducer.
-// Данный рудюсер слушает allPostsLoaded action и он должен
-// сохранять посты в store в Entity State формате
+// Создаем редюсер с помощью метода createReducer
 export const postsReducer = createReducer(
+
 	initialPostsState,
+
+	// Данный редюсер слушает allPostsLoaded action и он должен
+	// сохранять посты в store в Entity State формате
 	on(
 		PostsActions.allPostsLoaded,
 		// Следующий метод 1м аргументом принимает предыдущий state, вторым - action,
@@ -42,7 +44,44 @@ export const postsReducer = createReducer(
 				allPostsLoadedFlag: true
 			}
 		) 
+	),
+
+	// Данный редюсер слушает postUpdated action и он должен
+	// сохранять в store один измененный пост в Entity State формате.
+	// Первым параметром метод on() принимает action;
+	// Вторым - что нужно делать в ответ на получение данного action.
+	// on() возвратит новую версию стейта
+	on(
+		PostsActions.postUpdated, 
+		// updateOne - adapter-метод для обновления одного элемента store в Entity State формате
+		(state, action) => adapter.updateOne( 
+			// Пост, который изменил юзер
+			action.update,
+
+	  	// Предыдущее состояние
+			state
+		)
+		/*
+			action = {
+				type: "[Edit Post Dialog] Post Updated",
+				update: {
+					id: '111',
+					changes: {
+						userId: 1,
+						id: '111',
+						title: 'post',
+						body: ''
+					}
+				}
+			}
+
+			state = {
+				ids: [1,2,...100],
+				entities: { 100 объектов постов }
+			}
+		*/
 	)
+
 );
 
 export const {
