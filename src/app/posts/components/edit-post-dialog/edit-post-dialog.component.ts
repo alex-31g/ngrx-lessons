@@ -3,10 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { IPost } from "../../model/post.model";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PostsService } from '../../posts.service';
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/reducers';
 import { Update } from '@ngrx/entity';
-import { postUpdated } from '../../posts.actions';
 
 @Component({
   selector: 'post-dialog',
@@ -31,8 +28,7 @@ export class EditPostDialogComponent {
     // (https://material.angular.io/components/dialog/overview)
     @Inject(MAT_DIALOG_DATA) data,
 
-    // private postsService: PostsService // <-- обращение к postsService.savePost - удаляем
-    private store: Store<AppState>
+    private postsService: PostsService
   ) {
     this.dialogTitle = data.dialogTitle;
     this.post = data.post;
@@ -65,25 +61,15 @@ export class EditPostDialogComponent {
       ...this.form.value
     };
     
-    // Вместо того, чтобы обращаться к серверу после того, как пользователь изменил пост,
-    // мы будем диспатчить action 'postUpdated' (см. ниже), 
-    // поэтому обращение к postsService.savePost - удаляем
-    
-    // this.postsService.savePost(post.id, post)
-    //   .subscribe(
-    //     () => this.dialogRef.close()
-    //   )
+    this.postsService.savePost(post.id, post)
+      .subscribe(
+        () => this.dialogRef.close()
+      )
 
     const update: Update<IPost> = {
       id: post.id,
       changes: post
     }
-
-    // Диспатчим action 'postUpdated', сообщая что данные поста изменились
-    this.store.dispatch(postUpdated({update}));
-
-    // Закрываем окно редактирования
-    this.dialogRef.close();
   }
 
 }
