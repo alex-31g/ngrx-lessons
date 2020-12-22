@@ -12,6 +12,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditPostDialogComponent } from './components/edit-post-dialog/edit-post-dialog.component';
+import { EntityDefinitionService, EntityMetadataMap } from '@ngrx/data';
+import { PostsEntityService} from './posts-entity.service';
 
 const postsRoutes: Routes = [
 	{ 
@@ -21,6 +23,15 @@ const postsRoutes: Routes = [
 
   { path: ':postId', component: PostComponent },
 ];
+
+// Создаем конфигурацию для Post-entity.
+// Этот объект будет содержать по одной записи для каждой сущности в нашем приложении
+const entityMetadata: EntityMetadataMap = {
+  // Сущность Post
+	Post: {
+		
+	}
+}
 
 @NgModule({
 	imports: [
@@ -41,7 +52,14 @@ const postsRoutes: Routes = [
 	],
 	providers: [
 		PostsService,
+		PostsEntityService,
   ]
 })
 export class PostsModule {
+  // Поскольку post.module - это lazy load модуль, 
+  // нам нужно добавить новый сервис - EntityDefinitionService, 
+  // который мы будем использовать для регистрации конфигурации entityMetadata 
+	constructor(private eds: EntityDefinitionService) {
+		eds.registerMetadataMap(entityMetadata);
+	}
 }
