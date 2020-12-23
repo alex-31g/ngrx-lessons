@@ -1,4 +1,5 @@
 <div *ngIf="(post$ | async) as post">
+	<h3>{{ post?.description }}</h3>
 	<h3>{{ post?.category }} level</h3>
 	<h3>{{ post?.longDescription }}</h3>
 	<img [src]="post?.iconUrl">
