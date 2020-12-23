@@ -1,8 +1,7 @@
 <div *ngIf="(post$ | async) as post">
-	<h3>UserId: {{ post.userId }}</h3>
-	<h3>PostId: {{ post.id }}</h3>
-	<h3>Title: {{ post.title }}</h3>
-	<h3>Post: {{ post.body }}</h3>
+	<h3>{{ post?.category }} level</h3>
+	<h3>{{ post?.longDescription }}</h3>
+	<img [src]="post?.iconUrl">
 </div>
 
 <!-- При false - спинер должен отображаться -->

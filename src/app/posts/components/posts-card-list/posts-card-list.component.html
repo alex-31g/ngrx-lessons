@@ -3,10 +3,11 @@
 <div *ngFor='let post of allPosts'>
 	<hr>
 
-	TITLE: {{ post.title }}
-
+	<h3>{{ post.description }}</h3>
+	<img style="width: 100px;" [src]="post?.iconUrl">
+	
 	<button
-		[routerLink]="['/posts', post.id]"
+		[routerLink]="['/posts', post.url]"
 	>VIEW</button>
 
 	<button mat-mini-fab>

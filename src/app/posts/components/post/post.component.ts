@@ -22,8 +22,8 @@ export class PostComponent {
 	) {}
 	
 	ngOnInit() {
-		const postId = this.route.snapshot.paramMap.get("postId");
-		this.post$ = this.postsService.findPostById(postId);
+		const postUrl = this.route.snapshot.paramMap.get("postUrl");
+		this.post$ = this.postsService.findPostById(postUrl);
 
 		// Переводим значение в boolean:
 		// если в posts есть данные - получим true, если нет - false

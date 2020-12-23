@@ -37,16 +37,16 @@ export class EditPostDialogComponent {
     console.log('MAT_DIALOG_DATA', data)
 
     const formControls = {
-      title: ['', Validators.required],
-      body: ['', Validators.required],
+      category: ['', Validators.required],
+      description: ['', Validators.required],
     };
 
     if (this.mode == 'update') {
       this.form = this.fb.group(formControls);
 
       // Передаем методу patchValue объект, полученный из posts-card-list компонента.
-      // Несмотря на то, что объект содержит 4 поля - body, id, title, userId -
-      // метод patchValue берет из него только поля, описанные в formControls - title, body
+      // Несмотря на то, что объект содержит много полей -
+      // метод patchValue берет из него только поля, описанные в formControls - category, description
       this.form.patchValue({...data.post});
     }
   }
