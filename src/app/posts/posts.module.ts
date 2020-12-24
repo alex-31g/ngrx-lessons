@@ -1,6 +1,3 @@
-import { postsReducer } from './reducers/posts.reducers';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './components/home/home.component';
@@ -8,8 +5,6 @@ import { PostsCardListComponent } from './components/posts-card-list/posts-card-
 import { PostComponent } from './components/post/post.component';
 import { RouterModule, Routes } from '@angular/router';
 import { PostsService } from "./posts.service";
-import { PostsResolver } from './posts.resolver';
-import { PostsEffects } from './posts.effects';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,6 +12,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditPostDialogComponent } from './components/edit-post-dialog/edit-post-dialog.component';
+import { EntityDataService, EntityDefinitionService, EntityMetadataMap } from '@ngrx/data';
+import { PostsEntityService} from './posts-entity.service';
+import { PostsResolver} from './posts.resolver';
+import { PostsDataService} from './posts-data.service';
 
 const postsRoutes: Routes = [
 	{ 
@@ -27,18 +26,25 @@ const postsRoutes: Routes = [
 		// его необходимо подключить следующим образом:
 		resolve: {
 			posts: PostsResolver
-		} 
+		}
 	},
 
-  { path: ':postId', component: PostComponent },
+  { path: ':postUrl', component: PostComponent },
 ];
+
+// Создаем конфигурацию для Post-entity.
+// Этот объект будет содержать по одной записи для каждой сущности в нашем приложении
+const entityMetadata: EntityMetadataMap = {
+  // Сущность Post
+	Post: {
+  
+	}
+}
 
 @NgModule({
 	imports: [
 		CommonModule,
 		RouterModule.forChild(postsRoutes),
-		EffectsModule.forFeature([PostsEffects]),
-		StoreModule.forFeature('posts', postsReducer),
 		MatProgressSpinnerModule,
 		MatButtonModule,
 		MatIconModule,
@@ -54,8 +60,30 @@ const postsRoutes: Routes = [
 	],
 	providers: [
 		PostsService,
+		PostsEntityService,
 		PostsResolver,
+		PostsDataService,
   ]
 })
 export class PostsModule {
+	constructor(
+		// Поскольку post.module - это lazy load модуль, 
+		// нам нужно добавить новый сервис - EntityDefinitionService, 
+		// который мы будем использовать для регистрации конфигурации entityMetadata 
+		private eds: EntityDefinitionService,
+
+		// entityDataService - с помощью данного сервиса можно 
+    // регистрировать data-сервисы для наших entity
+		private entityDataService: EntityDataService,
+
+		// PostsDataService - data-сервис, который мы создали для обращений к бекенду
+		private postsDataService: PostsDataService,
+	) {
+		eds.registerMetadataMap(entityMetadata);
+
+		// Указываем, что postsDataService необходимо использовать при обращение к бекенду,
+		// вместо того, чтоб использовать стандартное поведение ndrx/data 
+		// (описание стандартного поведения см. п.39.2)
+		entityDataService.registerService('Post', postsDataService);
+	}
 }

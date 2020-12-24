@@ -8,16 +8,14 @@ export class PostsService {
 	constructor(private http: HttpClient) {}
 
 	findAllPosts(): Observable<IPost[]> {
-		return this.http.get<IPost[]>('https://jsonplaceholder.typicode.com/posts/');
+		return this.http.get<IPost[]>('/api/courses');
 	}
 
-	findPostById(postId: string): Observable<IPost> {
-		return this.http.get<IPost>(`https://jsonplaceholder.typicode.com/posts/${postId}`);
+	findPostById(postUrl: string): Observable<IPost> {
+		return this.http.get<IPost>(`/api/courses/${postUrl}`);
 	}
 
-	savePost(postId: number | string, changes: Partial<IPost>) {
-		console.log('savePost', postId)
-		console.log('savePost', changes)
-		return this.http.get<IPost[]>('https://jsonplaceholder.typicode.com/posts/');
+	savePost(courseId: number | string, changes: Partial<IPost>) {
+		return this.http.put('/api/course/' + courseId, changes);
 	}
 }

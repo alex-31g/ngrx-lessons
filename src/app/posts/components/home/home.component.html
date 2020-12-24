@@ -1,6 +1,6 @@
-<!-- Передаем значения переменных allPosts$ и numb$ из *home.component* в *posts-card-list.component* -->
+<!-- Передаем значения переменных allPosts$ и numb из *home.component* в *posts-card-list.component* -->
 <nl-posts-card-list 
 	(postChanged)="reload()"
 	[allPosts]="allPosts$ | async"
-	[postsNumb]="numb$ | async"
+	[postsNumb]="numb"
 >
