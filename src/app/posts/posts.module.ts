@@ -12,16 +12,24 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditPostDialogComponent } from './components/edit-post-dialog/edit-post-dialog.component';
-import { EntityDefinitionService, EntityMetadataMap } from '@ngrx/data';
+import { EntityDataService, EntityDefinitionService, EntityMetadataMap } from '@ngrx/data';
 import { PostsEntityService} from './posts-entity.service';
+import { PostsResolver} from './posts.resolver';
+import { PostsDataService} from './posts-data.service';
 
 const postsRoutes: Routes = [
 	{ 
 		path: '', 
 		component: HomeComponent, 
+
+		// Чтобы сообщить роутеру, что перед переходом на HomeComponent необходимо обработать резолвер -
+		// его необходимо подключить следующим образом:
+		resolve: {
+			posts: PostsResolver
+		}
 	},
 
-  { path: ':postId', component: PostComponent },
+  { path: ':postUrl', component: PostComponent },
 ];
 
 // Создаем конфигурацию для Post-entity.
@@ -29,7 +37,7 @@ const postsRoutes: Routes = [
 const entityMetadata: EntityMetadataMap = {
   // Сущность Post
 	Post: {
-		
+  
 	}
 }
 
@@ -53,13 +61,29 @@ const entityMetadata: EntityMetadataMap = {
 	providers: [
 		PostsService,
 		PostsEntityService,
+		PostsResolver,
+		PostsDataService,
   ]
 })
 export class PostsModule {
-  // Поскольку post.module - это lazy load модуль, 
-  // нам нужно добавить новый сервис - EntityDefinitionService, 
-  // который мы будем использовать для регистрации конфигурации entityMetadata 
-	constructor(private eds: EntityDefinitionService) {
+	constructor(
+		// Поскольку post.module - это lazy load модуль, 
+		// нам нужно добавить новый сервис - EntityDefinitionService, 
+		// который мы будем использовать для регистрации конфигурации entityMetadata 
+		private eds: EntityDefinitionService,
+
+		// entityDataService - с помощью данного сервиса можно 
+    // регистрировать data-сервисы для наших entity
+		private entityDataService: EntityDataService,
+
+		// PostsDataService - data-сервис, который мы создали для обращений к бекенду
+		private postsDataService: PostsDataService,
+	) {
 		eds.registerMetadataMap(entityMetadata);
+
+		// Указываем, что postsDataService необходимо использовать при обращение к бекенду,
+		// вместо того, чтоб использовать стандартное поведение ndrx/data 
+		// (описание стандартного поведения см. п.39.2)
+		entityDataService.registerService('Post', postsDataService);
 	}
 }
