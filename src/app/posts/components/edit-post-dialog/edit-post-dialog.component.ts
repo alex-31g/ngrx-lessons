@@ -4,6 +4,7 @@ import { IPost } from "../../model/post.model";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PostsService } from '../../posts.service';
 import { Update } from '@ngrx/entity';
+import { PostsEntityService } from '../../posts-entity.service';
 
 @Component({
   selector: 'post-dialog',
@@ -28,7 +29,10 @@ export class EditPostDialogComponent {
     // (https://material.angular.io/components/dialog/overview)
     @Inject(MAT_DIALOG_DATA) data,
 
-    private postsService: PostsService
+    // private postsService: PostsService
+
+    // Для получения данных из store мы будем использовать PostsEntityService
+    private postsEntityService: PostsEntityService
   ) {
     this.dialogTitle = data.dialogTitle;
     this.post = data.post;
@@ -60,16 +64,29 @@ export class EditPostDialogComponent {
       ...this.post,
       ...this.form.value
     };
-    
-    this.postsService.savePost(post.id, post)
-      .subscribe(
-        () => this.dialogRef.close()
-      )
 
-    const update: Update<IPost> = {
-      id: post.id,
-      changes: post
+    if (this.mode === 'update') {
+      // Метод update входит в состав EntityService - он выполняет put-запросы к серверу
+      // (update строит url запроса по специальной конвенции - но в нашем случаи
+      // - необходимо задать кастомный url - см. post-data.service),
+      // и сохраняет обновленные данные в store
+      this.postsEntityService.update(post);
+
+      // Закрываем окно редактирования
+      this.dialogRef.close();
     }
+
+    // =====================
+    // Старый код
+    // this.postsService.savePost(post.id, post)
+    //   .subscribe(
+    //     () => this.dialogRef.close()
+    //   )
+
+    // const update: Update<IPost> = {
+    //   id: post.id,
+    //   changes: post
+    // }
   }
 
 }

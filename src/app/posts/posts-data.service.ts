@@ -29,4 +29,10 @@ export class PostsDataService extends DefaultDataService<IPost> {
         map(res => res['payload'])
       )
   }
+
+  // выполняем over-write метода update, перезатирая его стандартное поведение
+  update(post): Observable<IPost> {
+    // `/api/course/${post.id}` - кастомный url 
+    return this.http.put<IPost>(`/api/course/${post.id}`, post.changes);
+  }
 }

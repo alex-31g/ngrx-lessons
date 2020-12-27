@@ -16,6 +16,7 @@ import { EntityDataService, EntityDefinitionService, EntityMetadataMap } from '@
 import { PostsEntityService} from './posts-entity.service';
 import { PostsResolver} from './posts.resolver';
 import { PostsDataService} from './posts-data.service';
+import { compareCourses } from './model/post.model';
 
 const postsRoutes: Routes = [
 	{ 
@@ -37,7 +38,16 @@ const postsRoutes: Routes = [
 const entityMetadata: EntityMetadataMap = {
   // Сущность Post
 	Post: {
-  
+		// Передаем ф-цию сортировки
+		sortComparer: compareCourses,
+		
+		// optimisticUpdate: true - обновление store в optimistic способ -
+		// не дожидаясь ответа от сервера - store будет обновлен.
+		// Если не задать этот флаг - обновление store будет происходить в pesimistic способ -
+		// store будет обновлен после того, как будет получен ответ от сервера
+		entityDispatcherOptions: {
+			optimisticUpdate: true		
+		}
 	}
 }
 
