@@ -39,7 +39,15 @@ const entityMetadata: EntityMetadataMap = {
   // Сущность Post
 	Post: {
 		// Передаем ф-цию сортировки
-  	sortComparer: compareCourses
+		sortComparer: compareCourses,
+		
+		// optimisticUpdate: true - обновление store в optimistic способ -
+		// не дожидаясь ответа от сервера - store будет обновлен.
+		// Если не задать этот флаг - обновление store будет происходить в pesimistic способ -
+		// store будет обновлен после того, как будет получен ответ от сервера
+		entityDispatcherOptions: {
+			optimisticUpdate: true		
+		}
 	}
 }
 

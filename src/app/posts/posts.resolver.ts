@@ -26,6 +26,8 @@ export class PostsResolver implements Resolve<boolean> {
           // скачанные в store и сработает getAll-метод,
           // который выполнит запрос на сервер и сохранит результат в store
           if (!loaded) {
+            // Метод getAll входит в состав EntityService - он выполняет get-запросы
+            // и сохраняет полученный от сервера результат в store
             this.postsEntityService.getAll();
           }
         }),
