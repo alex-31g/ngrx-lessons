@@ -13,10 +13,12 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditPostDialogComponent } from './components/edit-post-dialog/edit-post-dialog.component';
 import { EntityDataService, EntityDefinitionService, EntityMetadataMap } from '@ngrx/data';
-import { PostsEntityService} from './posts-entity.service';
+import { PostsEntityService } from './posts-entity.service';
+import { LessonsEntityService } from './lessons-entity.service';
 import { PostsResolver} from './posts.resolver';
 import { PostsDataService} from './posts-data.service';
 import { compareCourses } from './model/post.model';
+import { compareLessons } from './model/lesson';
 
 const postsRoutes: Routes = [
 	{ 
@@ -33,8 +35,8 @@ const postsRoutes: Routes = [
   { path: ':postUrl', component: PostComponent },
 ];
 
-// Создаем конфигурацию для Post-entity.
-// Этот объект будет содержать по одной записи для каждой сущности в нашем приложении
+// Создаем entity-конфигурацию для Post-модуля.
+// Этот объект будет содержать entity-сущности, используемые в приложении
 const entityMetadata: EntityMetadataMap = {
   // Сущность Post
 	Post: {
@@ -48,8 +50,14 @@ const entityMetadata: EntityMetadataMap = {
 		entityDispatcherOptions: {
 			optimisticUpdate: true,
 			// optimisticAdd: true,
-			optimisticDelete: false,	
+			// optimisticDelete: false,	
 		}
+	},
+
+	// Сущность Lesson
+	Lesson: {
+		// Передаем ф-цию сортировки
+		sortComparer: compareLessons,
 	}
 }
 
@@ -73,6 +81,7 @@ const entityMetadata: EntityMetadataMap = {
 	providers: [
 		PostsService,
 		PostsEntityService,
+		LessonsEntityService,
 		PostsResolver,
 		PostsDataService,
   ]
