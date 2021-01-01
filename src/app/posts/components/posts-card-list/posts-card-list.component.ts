@@ -3,6 +3,7 @@ import { IPost } from "../../model/post.model";
 import { MatDialog } from "@angular/material/dialog";
 import { EditPostDialogComponent } from "../edit-post-dialog/edit-post-dialog.component";
 import { defaultDialogConfig } from '../../shared/default-dialog-config';
+import { PostsEntityService } from "../../posts-entity.service";
 
 @Component({
   selector: "nl-posts-card-list",
@@ -17,7 +18,10 @@ export class PostsCardListComponent {
 
 	@Output() postChanged = new EventEmitter();
 
-	constructor(private dialog: MatDialog) {}
+	constructor(
+		private dialog: MatDialog,
+		private postsEntityService: PostsEntityService,
+	) {}
 
 	editPost(post: IPost) {
 		// В dialogConfig получаем базовые настройки нашего окна редактирования
@@ -45,4 +49,19 @@ export class PostsCardListComponent {
 			.subscribe(() => this.postChanged.emit());
 	}
 
+	onDeletePost(post: IPost) {
+		console.log('delete', post);
+		// Метод delete входит в состав EntityService - он выполняет delete-запросы к серверу
+		// (delete строит url запроса по специальной конвенции - но в нашем случаи
+		// - необходимо задать кастомный url - см. post-data.service),
+		// и также удаляет данные в store.
+		// По умолчанию delete - optimistic метод.
+		// Возвратит observable, когда удаление на бекенде будет выполнено,
+		// но нам не нужно на него подписываться
+		this.postsEntityService.delete(post)
+			.subscribe(
+				() => console.log('Delete completed'),
+				err => console.log('Delete failed', err)
+			)
+  }
 }

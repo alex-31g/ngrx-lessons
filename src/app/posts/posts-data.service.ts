@@ -41,4 +41,10 @@ export class PostsDataService extends DefaultDataService<IPost> {
     // `/api/course/` - кастомный url 
     return this.http.post<IPost>(`/api/course/`, newPost);
   }
+
+  // выполняем over-write метода delete, перезатирая его стандартное поведение
+  delete(postId: number | string): Observable<number | string> {
+    // `/api/course/${post}` - кастомный url 
+    return this.http.delete<number | string>(`/api/course/${postId}`);
+  }
 }

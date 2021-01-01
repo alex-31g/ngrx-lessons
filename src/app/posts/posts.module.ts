@@ -47,7 +47,8 @@ const entityMetadata: EntityMetadataMap = {
 		// store будет обновлен после того, как будет получен ответ от сервера
 		entityDispatcherOptions: {
 			optimisticUpdate: true,
-			// optimisticAdd: true	
+			// optimisticAdd: true,
+			optimisticDelete: false,	
 		}
 	}
 }
