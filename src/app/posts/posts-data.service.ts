@@ -35,4 +35,10 @@ export class PostsDataService extends DefaultDataService<IPost> {
     // `/api/course/${post.id}` - кастомный url 
     return this.http.put<IPost>(`/api/course/${post.id}`, post.changes);
   }
+
+  // выполняем over-write метода add, перезатирая его стандартное поведение
+  add(newPost): Observable<IPost> {
+    // `/api/course/` - кастомный url 
+    return this.http.post<IPost>(`/api/course/`, newPost);
+  }
 }

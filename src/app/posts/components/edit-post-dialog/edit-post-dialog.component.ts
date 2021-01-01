@@ -52,6 +52,12 @@ export class EditPostDialogComponent {
       // Несмотря на то, что объект содержит много полей -
       // метод patchValue берет из него только поля, описанные в formControls - category, description
       this.form.patchValue({...data.post});
+    } else if (this.mode == 'create') {
+      this.form = this.fb.group({
+        ...formControls,
+        url: ['', Validators.required],
+        iconUrl: ['', Validators.required]
+      });
     }
   }
 
@@ -74,6 +80,18 @@ export class EditPostDialogComponent {
 
       // Закрываем окно редактирования
       this.dialogRef.close();
+    } else if (this.mode === 'create') {
+      // Метод add входит в состав EntityService - он выполняет post-запросы к серверу
+      // (add строит url запроса по специальной конвенции - но в нашем случаи
+      // - необходимо задать кастомный url - см. post-data.service),
+      // и сохраняет обновленные данные в store
+      this.postsEntityService.add(post)
+        .subscribe(
+          newPost => {
+            console.log('New post', newPost);
+            this.dialogRef.close();
+          }
+        )
     }
 
     // =====================

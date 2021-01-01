@@ -46,7 +46,8 @@ const entityMetadata: EntityMetadataMap = {
 		// Если не задать этот флаг - обновление store будет происходить в pesimistic способ -
 		// store будет обновлен после того, как будет получен ответ от сервера
 		entityDispatcherOptions: {
-			optimisticUpdate: true		
+			optimisticUpdate: true,
+			// optimisticAdd: true	
 		}
 	}
 }

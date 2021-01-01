@@ -4,6 +4,9 @@ import { Observable } from "rxjs";
 import { tap, map } from "rxjs/operators";
 import { IPost, compareCourses } from "../../model/post.model";
 import { PostsEntityService} from '../../posts-entity.service';
+import { defaultDialogConfig } from '../../shared/default-dialog-config';
+import { MatDialog } from '@angular/material/dialog';
+import { EditPostDialogComponent } from "../edit-post-dialog/edit-post-dialog.component";
 
 @Component({
   selector: "nl-home",
@@ -19,7 +22,9 @@ export class HomeComponent {
 		// private postsService: PostsService,
 
 		// Для получения данных из store мы будем использовать PostsEntityService
-		private postsEntityService: PostsEntityService
+		private postsEntityService: PostsEntityService,
+
+		private dialog: MatDialog,
 	) {}
 
 	ngOnInit() {
@@ -56,4 +61,22 @@ export class HomeComponent {
 		// )
 		
 	}
+
+  onAddCourse() {
+		// В dialogConfig получаем базовые настройки нашего окна редактирования
+    const dialogConfig = defaultDialogConfig();
+
+		// Записываем в dialogConfig.data данные, которые мы хотим передать 
+		// edit-post-dialog компоненту, который содержит material-модуль MatDialog
+		// (https://material.angular.io/components/dialog/overview)
+    dialogConfig.data = {
+      dialogTitle:"Create Course",
+      mode: 'create'
+    };
+
+		// Метод open - будет вызван, когда пользователь откроет окно:
+    // 1й параметр - компонент, который необходимо отобразить при открытии окна
+    // 2й параметр - объект с настройками  и данными
+    this.dialog.open(EditPostDialogComponent, dialogConfig);
+  }
 }
