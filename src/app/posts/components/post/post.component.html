@@ -1,11 +1,36 @@
 <div *ngIf="(post$ | async) as post">
+	
 	<h3>{{ post?.description }}</h3>
 	<h3>{{ post?.category }} level</h3>
 	<h3>{{ post?.longDescription }}</h3>
 	<img [src]="post?.iconUrl">
+
+	<mat-table class="mat-elevation-z8" [dataSource]="lessons$ | async">
+		<ng-container matColumnDef="seqNo">
+			<mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+			<mat-cell *matCellDef="let post">{{post.seqNo}}</mat-cell>
+		</ng-container>
+		<ng-container matColumnDef="description">
+			<mat-header-cell *matHeaderCellDef>Description</mat-header-cell>
+			<mat-cell *matCellDef="let post">{{post.description}}</mat-cell>
+		</ng-container>
+		<ng-container matColumnDef="duration">
+			<mat-header-cell *matHeaderCellDef>Duration</mat-header-cell>
+			<mat-cell *matCellDef="let post">{{post.duration}}</mat-cell>
+		</ng-container>
+		<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+		<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+	</mat-table>
+
+	<button 
+		mat-raised-button 
+		color="accent"
+		(click)="loadLessonsPage(post)"
+	>Load More</button>
+
 </div>
 
-<!-- При false - спинер должен отображаться -->
-<div class="spinner-container" *ngIf="!(loading$ | async)">
+<!-- При true - спинер должен отображаться -->
+<div class="spinner-container" *ngIf="(loading$ | async)">
 	<mat-spinner></mat-spinner>
 </div>

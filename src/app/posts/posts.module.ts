@@ -10,6 +10,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditPostDialogComponent } from './components/edit-post-dialog/edit-post-dialog.component';
 import { EntityDataService, EntityDefinitionService, EntityMetadataMap } from '@ngrx/data';
@@ -70,6 +72,8 @@ const entityMetadata: EntityMetadataMap = {
 		MatIconModule,
 		MatDialogModule,
 		MatInputModule,
+		MatTableModule,
+		MatPaginatorModule,
 		ReactiveFormsModule,
 	],
 	declarations: [
