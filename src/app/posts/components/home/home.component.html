@@ -1,6 +1,13 @@
+<div class="header">
+	Добавить новый пост 
+	<button mat-mini-fab>
+		<mat-icon (click)="onAddCourse()">add</mat-icon>
+	</button>
+</div>
+
 <!-- Передаем значения переменных allPosts$ и numb из *home.component* в *posts-card-list.component* -->
 <nl-posts-card-list 
 	(postChanged)="reload()"
 	[allPosts]="allPosts$ | async"
-	[postsNumb]="numb"
+	[postsNumb]="numb | async"
 >

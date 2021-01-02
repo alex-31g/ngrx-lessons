@@ -5,13 +5,17 @@
 
 	<h3>{{ post.description }}</h3>
 	<img style="width: 100px;" [src]="post?.iconUrl">
-	
-	<button
-		[routerLink]="['/posts', post.url]"
-	>VIEW</button>
+
+	<button mat-raised-button color="primary" [routerLink]="['/posts', post.url]">
+		VIEW
+	</button>
 
 	<button mat-mini-fab>
 		<mat-icon (click)="editPost(post)">edit</mat-icon>
+	</button>
+
+	<button mat-mini-fab color="warn">
+		<mat-icon (click)="onDeletePost(post)">delete</mat-icon>
 	</button>
 	
 </div>

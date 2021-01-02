@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { IPost } from "../../model/post.model";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -9,7 +9,8 @@ import { PostsEntityService } from '../../posts-entity.service';
 @Component({
   selector: 'post-dialog',
   templateUrl: './edit-post-dialog.component.html',
-  styleUrls: ['./edit-post-dialog.component.sass']
+  styleUrls: ['./edit-post-dialog.component.sass'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditPostDialogComponent {
 
@@ -52,6 +53,12 @@ export class EditPostDialogComponent {
       // Несмотря на то, что объект содержит много полей -
       // метод patchValue берет из него только поля, описанные в formControls - category, description
       this.form.patchValue({...data.post});
+    } else if (this.mode == 'create') {
+      this.form = this.fb.group({
+        ...formControls,
+        url: ['', Validators.required],
+        iconUrl: ['', Validators.required]
+      });
     }
   }
 
@@ -74,6 +81,19 @@ export class EditPostDialogComponent {
 
       // Закрываем окно редактирования
       this.dialogRef.close();
+    } else if (this.mode === 'create') {
+      // Метод add входит в состав EntityService - он выполняет post-запросы к серверу
+      // (add строит url запроса по специальной конвенции - но в нашем случаи
+      // - необходимо задать кастомный url - см. post-data.service),
+      // и сохраняет обновленные данные в store.
+      // По умолчанию add - pesimistic метод.
+      this.postsEntityService.add(post)
+        .subscribe(
+          newPost => {
+            console.log('New post', newPost);
+            this.dialogRef.close();
+          }
+        )
     }
 
     // =====================

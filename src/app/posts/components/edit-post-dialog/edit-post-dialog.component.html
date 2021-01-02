@@ -18,6 +18,23 @@
           formControlName="description"
         >
       </mat-form-field>
+
+      <ng-container *ngIf="mode == 'create'">
+        <mat-form-field>
+          <input 
+            matInput              
+            placeholder="Course Url"
+            formControlName="url"
+          >
+        </mat-form-field>
+        <mat-form-field>
+          <input 
+            matInput
+            placeholder="Course Icon Url"
+            formControlName="iconUrl"
+          >
+        </mat-form-field>
+      </ng-container>
     </ng-container>
 
   </ng-container>

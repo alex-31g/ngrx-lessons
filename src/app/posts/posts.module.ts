@@ -10,13 +10,17 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { ReactiveFormsModule } from '@angular/forms';
 import { EditPostDialogComponent } from './components/edit-post-dialog/edit-post-dialog.component';
 import { EntityDataService, EntityDefinitionService, EntityMetadataMap } from '@ngrx/data';
-import { PostsEntityService} from './posts-entity.service';
+import { PostsEntityService } from './posts-entity.service';
+import { LessonsEntityService } from './lessons-entity.service';
 import { PostsResolver} from './posts.resolver';
 import { PostsDataService} from './posts-data.service';
 import { compareCourses } from './model/post.model';
+import { compareLessons } from './model/lesson';
 
 const postsRoutes: Routes = [
 	{ 
@@ -33,8 +37,8 @@ const postsRoutes: Routes = [
   { path: ':postUrl', component: PostComponent },
 ];
 
-// Создаем конфигурацию для Post-entity.
-// Этот объект будет содержать по одной записи для каждой сущности в нашем приложении
+// Создаем entity-конфигурацию для Post-модуля.
+// Этот объект будет содержать entity-сущности, используемые в приложении
 const entityMetadata: EntityMetadataMap = {
   // Сущность Post
 	Post: {
@@ -46,8 +50,16 @@ const entityMetadata: EntityMetadataMap = {
 		// Если не задать этот флаг - обновление store будет происходить в pesimistic способ -
 		// store будет обновлен после того, как будет получен ответ от сервера
 		entityDispatcherOptions: {
-			optimisticUpdate: true		
+			optimisticUpdate: true,
+			// optimisticAdd: true,
+			// optimisticDelete: false,	
 		}
+	},
+
+	// Сущность Lesson
+	Lesson: {
+		// Передаем ф-цию сортировки
+		sortComparer: compareLessons,
 	}
 }
 
@@ -60,6 +72,8 @@ const entityMetadata: EntityMetadataMap = {
 		MatIconModule,
 		MatDialogModule,
 		MatInputModule,
+		MatTableModule,
+		MatPaginatorModule,
 		ReactiveFormsModule,
 	],
 	declarations: [
@@ -71,6 +85,7 @@ const entityMetadata: EntityMetadataMap = {
 	providers: [
 		PostsService,
 		PostsEntityService,
+		LessonsEntityService,
 		PostsResolver,
 		PostsDataService,
   ]
