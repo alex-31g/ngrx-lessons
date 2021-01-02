@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from "@angular/core";
 import { IPost } from "../../model/post.model";
 import { MatDialog } from "@angular/material/dialog";
 import { EditPostDialogComponent } from "../edit-post-dialog/edit-post-dialog.component";
@@ -7,7 +7,8 @@ import { PostsEntityService } from "../../posts-entity.service";
 
 @Component({
   selector: "nl-posts-card-list",
-  templateUrl: "./posts-card-list.component.html"
+	templateUrl: "./posts-card-list.component.html",
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class PostsCardListComponent {

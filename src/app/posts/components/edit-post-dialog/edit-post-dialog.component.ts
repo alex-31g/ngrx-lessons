@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { IPost } from "../../model/post.model";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -9,7 +9,8 @@ import { PostsEntityService } from '../../posts-entity.service';
 @Component({
   selector: 'post-dialog',
   templateUrl: './edit-post-dialog.component.html',
-  styleUrls: ['./edit-post-dialog.component.sass']
+  styleUrls: ['./edit-post-dialog.component.sass'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditPostDialogComponent {
 

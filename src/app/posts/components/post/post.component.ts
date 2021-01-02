@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { IPost } from '../../model/post.model';
@@ -9,7 +9,8 @@ import { ILesson } from "../../model/lesson";
 
 @Component({
   selector: "nl-post",
-  templateUrl: "./post.component.html"
+	templateUrl: "./post.component.html",
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class PostComponent {

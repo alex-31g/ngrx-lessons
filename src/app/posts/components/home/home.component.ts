@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { PostsService } from '../../posts.service';
 import { Observable } from "rxjs";
 import { tap, map } from "rxjs/operators";
@@ -10,8 +10,8 @@ import { EditPostDialogComponent } from "../edit-post-dialog/edit-post-dialog.co
 
 @Component({
   selector: "nl-home",
-  templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.sass"],
+	templateUrl: "./home.component.html",
+	changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class HomeComponent {
